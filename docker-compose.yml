@@ -1,9 +1,12 @@
 version: '3.8'
+volumes:
+  local_postgres_data: {}
+
 services:
   db:
     image: postgres
     volumes:
-      - ./data/db:/var/lib/postgresql/data
+      - local_postgres_data:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
