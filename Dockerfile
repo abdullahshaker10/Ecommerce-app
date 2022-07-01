@@ -1,9 +1,17 @@
-FROM python:3.6-alpine
-ENV PYTHONDONTWRITEBYTECODE=1
+# Pull base image
+FROM python:3.10.2-slim-bullseye
 
-ENV PYTHONUNBUFFUERED=1
+# Set environment variables
+ENV PIP_DISABLE_PIP_VERSION_CHECK 1
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-WORKDIR /django
-COPY requirements.txt requirements.txt
-RUN pip3 install -r requirements.txt
-COPY . /django/
+# Set work directory
+WORKDIR /code
+
+# Install dependencies
+COPY ./requirements.txt .
+RUN pip install -r requirements.txt
+
+# Copy project
+COPY . .

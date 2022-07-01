@@ -1,23 +1,20 @@
-version: '3.8'
-volumes:
-  local_postgres_data: {}
-
+version: "3.9"
 services:
-  db:
-    image: postgres
-    volumes:
-      - local_postgres_data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-
-  app:
+  web:
     build: .
-    volumes:
-      - .:/django
     ports:
-      - 8000:8000
-    image: app:django
-    container_name: django_container
-    command : python manage.py runserver 0.0.0.0:8000
+      - "8000:8000"
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code 
+
+
+  db:
+    image: postgres:13
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
+
+volumes:
+  postgres_data:
