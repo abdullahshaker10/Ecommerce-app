@@ -8,4 +8,4 @@ class CategoryTypes(enum.Enum):
 
     @classmethod
     def choices(cls):
-        [(category, category.value) for category in cls]
+        return [(category.name, category.value) for category in cls]

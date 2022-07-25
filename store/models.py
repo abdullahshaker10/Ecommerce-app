@@ -3,6 +3,7 @@ from django.db import models
 
 from store.enums import CategoryTypes
 from users.models import CustomUser
+from django_extensions.db.models import TimeStampedModel
 
 
 class Category(models.Model):
@@ -10,7 +11,7 @@ class Category(models.Model):
     type = models.CharField(max_length=100, choices=CategoryTypes.choices())
 
 
-class Product(models.Model):
+class Product(TimeStampedModel, models.Model):
     name = models.CharField(max_length=100)
     category = models.ForeignKey(
         to=Category, related_name="products", on_delete=models.CASCADE
